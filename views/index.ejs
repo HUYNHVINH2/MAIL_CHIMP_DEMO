@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    CHỌN EMAIL GỬI 
+    <br>
+    <input  id='email' type ="text" />
+    <button id='addEmail'>Thêm</button>
+</div>
+<br>
+<div id='listUser' style = "border-style: solid ;width : 500px ;height : 200px"    >
+</div>
+<br>
+<button id='addListReciver'  type="">xác nhận</button><br>
+GỬI MAIL ==============================================<br>
+<button src ="/send-mail">send</button>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+let listEmail = [];
+    $(document).ready(function(){
+        $('#addEmail').click(function(){
+            let newEmail = $('#email').val();
+            console.log(newEmail)
+            console.log('===============')
+            listEmail.push(newEmail);
+            console.log(listEmail);
+            $('#listUser').append(`${newEmail} <br>  `);
+        });
+
+
+        $('#addListReciver').click(function(){
+            if(listEmail.length > 0){
+                $.ajax({
+                    url : '/add-members-list',
+                    method :'post', 
+                    dataType: "json",
+                    data : { list :  JSON.stringify(listEmail)},
+                    success :  function(result){
+                        console.log(result)
+                    },
+                    error : function(){
+
+                    }
+                })
+            }
+        })
+    })
+</script>
+</html>
